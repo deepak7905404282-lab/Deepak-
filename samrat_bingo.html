@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>सम्राट बिंगो</title>
+<style>
+:root{--bg:#080d18;--panel:#111b2d;--line:#293a55;--text:#f3f6ff;--muted:#a8b6cc;--gold:#f2c66d;--cyan:#49dcf2;--green:#3bd59a;--red:#ff6379}
+*{box-sizing:border-box}body{margin:0;background:radial-gradient(ellipse at top,#192849,#080d18 62%);color:var(--text);font-family:system-ui,Arial,sans-serif}
+header{padding:18px 16px;border-bottom:1px solid var(--line);background:#080e1deF}.wrap{max-width:900px;margin:auto}.brand{font-size:25px;font-weight:900;color:var(--gold);letter-spacing:.7px}.sub{font-size:12px;color:var(--muted);margin-top:3px}
+main{max-width:900px;margin:auto;padding:16px;display:grid;gap:14px}.notice{border:1px solid #69562d;background:#241d10;color:#ffe3a0;padding:12px;border-radius:12px;font-size:12px;line-height:1.5}
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}.panel,.stat{background:linear-gradient(145deg,#151f34,#0e1727);border:1px solid var(--line);border-radius:16px;padding:15px}.label{font-size:12px;color:var(--muted)}.value{font-size:24px;font-weight:850;margin-top:5px}h2{font-size:17px;margin:0 0 12px}p{font-size:13px;color:var(--muted);line-height:1.55}
+button,input{font:inherit}button{border:0;border-radius:11px;padding:11px 14px;background:var(--gold);color:#201707;font-weight:800;cursor:pointer}button.secondary{background:#243550;color:#f2f6ff;border:1px solid #3c5272}button:disabled{opacity:.45;cursor:not-allowed}
+.row{display:flex;gap:8px;flex-wrap:wrap}.row>*{flex:1;min-width:130px}.amounts{display:flex;gap:8px;margin:10px 0}.amounts button{flex:1}
+input{width:100%;padding:11px;border:1px solid #354966;background:#081222;color:white;border-radius:10px;margin:6px 0 10px}
+.choices{display:grid;grid-template-columns:repeat(5,1fr);gap:8px}.choice{min-height:72px;background:#17243a;border:1px solid #405270;color:#fff;font-size:19px}.choice small{display:block;font-size:11px;color:#b9c8dc;margin-top:4px}.choice.active{border:2px solid var(--gold);box-shadow:0 0 0 3px #f2c66d22}
+.result{margin-top:12px;background:#081222;border:1px solid var(--line);padding:14px;border-radius:12px;min-height:50px;font-weight:700}.history{width:100%;border-collapse:collapse;font-size:13px}.history th,.history td{padding:10px 7px;text-align:left;border-bottom:1px solid var(--line)}.history th{color:var(--muted)}.muted{color:var(--muted);font-size:12px}
+@media(max-width:560px){.grid{grid-template-columns:1fr 1fr}.grid .stat:last-child{grid-column:span 2}.value{font-size:21px}.choices{gap:5px}.choice{padding:8px 2px}}
+</style>
+</head>
+<body>
+<header><div class="wrap"><div class="brand">👑 सम्राट बिंगो</div><div class="sub">NUMBER & COLOUR ROUNDS</div></div></header>
+<main>
+<div class="notice">महत्वपूर्ण: यह इंटरफेस प्रोटोटाइप है। कोई वास्तविक जमा, भुगतान, दाँव या निकासी नहीं होती। दिखाया गया बैलेंस और राउंड परिणाम स्थानीय परीक्षण के लिए हैं। वास्तविक धन की सुविधा के लिए अधिकृत भुगतान प्रदाता, सुरक्षित सर्वर और लागू कानूनों की समीक्षा आवश्यक है।</div>
+<section class="grid">
+<div class="stat"><div class="label">प्रोटोटाइप बैलेंस</div><div class="value" id="balance">₹1,000</div></div>
+<div class="stat"><div class="label">कुल राउंड</div><div class="value" id="rounds">0</div></div>
+<div class="stat"><div class="label">नेट परिणाम</div><div class="value" id="net">₹0</div></div>
+</section>
+<section class="panel">
+<h2>बैलेंस सिम्युलेटर</h2><p>नीचे के बटन केवल स्क्रीन पर परीक्षण क्रेडिट जोड़ते हैं। ये असली भुगतान नहीं हैं।</p>
+<div class="amounts"><button data-add="500">+ ₹500</button><button data-add="1000">+ ₹1,000</button></div>
+<div class="row"><input id="custom" type="number" min="100" max="10000" step="100" placeholder="कस्टम राशि (₹100–₹10,000)"><button id="addCustom">टेस्ट क्रेडिट जोड़ें</button></div><div id="message" class="muted"></div>
+</section>
+<section class="panel">
+<h2>नंबर राउंड</h2><p>एक अक्षर चुनें और परीक्षण राउंड चलाएँ। परिणाम केवल डेमो है; इससे पैसे नहीं कमाए जा सकते।</p>
+<div class="choices">
+<button class="choice" data-choice="A">A<small>राउंड A</small></button><button class="choice" data-choice="B">B<small>राउंड B</small></button><button class="choice" data-choice="C">C<small>राउंड C</small></button><button class="choice" data-choice="D">D<small>राउंड D</small></button><button class="choice" data-choice="E">E<small>राउंड E</small></button>
+</div>
+<div class="row" style="margin-top:12px"><label class="muted" style="flex:2">टेस्ट राशि (₹)<input id="stake" type="number" min="10" max="500" step="10" value="50"></label><button id="play" disabled>राउंड चलाएँ</button></div>
+<div class="result" id="result" aria-live="polite">राउंड शुरू करने के लिए A–E में से चुनें।</div>
+</section>
+<section class="panel">
+<h2>लेन-देन रिकॉर्ड</h2><p>इस प्रोटोटाइप के रिकॉर्ड केवल इसी खुले पेज में रहते हैं।</p>
+<div style="overflow-x:auto"><table class="history"><thead><tr><th>समय</th><th>गतिविधि</th><th>बदलाव</th><th>बैलेंस</th></tr></thead><tbody id="history"><tr><td colspan="4" class="muted">अभी कोई रिकॉर्ड नहीं।</td></tr></tbody></table></div>
+<div class="row" style="margin-top:12px"><button class="secondary" id="reset">रीसेट</button><button class="secondary" id="csv">CSV रिकॉर्ड डाउनलोड</button></div>
+</section>
+</main>
+<script>
+(()=>{let balance=1000,rounds=0,net=0,selected='',records=[];
+const $=id=>document.getElementById(id),money=n=>'₹'+Math.round(n).toLocaleString('en-IN'),time=()=>new Date().toLocaleTimeString('hi-IN');
+function render(){$('balance').textContent=money(balance);$('rounds').textContent=rounds;$('net').textContent=(net>=0?'+':'−')+money(Math.abs(net));$('net').style.color=net>=0?'var(--green)':'var(--red)';$('play').disabled=!selected}
+function log(action,change){records.unshift({time:time(),action,change,balance});let body=$('history');body.replaceChildren();records.forEach(r=>{let tr=document.createElement('tr');[r.time,r.action,(r.change>=0?'+':'−')+money(Math.abs(r.change)),money(r.balance)].forEach(v=>{let td=document.createElement('td');td.textContent=v;tr.appendChild(td)});body.appendChild(tr)});if(!records.length)body.innerHTML='<tr><td colspan="4" class="muted">अभी कोई रिकॉर्ड नहीं।</td></tr>'}
+function add(n){if(!Number.isInteger(n)||n<100||n>10000||n%100){$('message').textContent='₹100 से ₹10,000 तक, ₹100 के स्टेप में राशि डालें।';return}balance+=n;$('message').textContent=money(n)+' टेस्ट क्रेडिट जोड़े गए।';log('टेस्ट क्रेडिट',n);render()}
+document.querySelectorAll('[data-add]').forEach(b=>b.onclick=()=>add(Number(b.dataset.add)));$('addCustom').onclick=()=>add(Number($('custom').value));
+document.querySelectorAll('[data-choice]').forEach(b=>b.onclick=()=>{selected=b.dataset.choice;document.querySelectorAll('[data-choice]').forEach(x=>x.classList.toggle('active',x===b));$('result').textContent='चयन: '+selected+'। अब टेस्ट राउंड चलाएँ।';render()});
+$('play').onclick=()=>{let stake=Number($('stake').value);if(!Number.isInteger(stake)||stake<10||stake>500){$('result').textContent='टेस्ट राशि ₹10 से ₹500 तक रखें।';return}if(stake>balance){$('result').textContent='टेस्ट बैलेंस पर्याप्त नहीं है।';return}
+const outcomes=['A','B','C','D','E'],outcome=outcomes[Math.floor(Math.random()*outcomes.length)];rounds++;balance-=stake;
+if(outcome===selected){balance+=stake*2;net+=stake;$('result').textContent='टेस्ट परिणाम '+outcome+' — मैच हुआ। प्रोटोटाइप लाभ '+money(stake)+'।';log('टेस्ट जीत • '+outcome,stake)}
+else{net-=stake;$('result').textContent='टेस्ट परिणाम '+outcome+' — मैच नहीं हुआ। प्रोटोटाइप में '+money(stake)+' घटे।';log('टेस्ट हार • '+outcome,-stake)}render()};
+$('reset').onclick=()=>{if(!confirm('सभी टेस्ट रिकॉर्ड रीसेट करें?'))return;balance=1000;rounds=0;net=0;selected='';records=[];document.querySelectorAll('[data-choice]').forEach(x=>x.classList.remove('active'));$('stake').value=50;$('result').textContent='राउंड शुरू करने के लिए A–E में से चुनें।';$('message').textContent='';log('नया टेस्ट सत्र',0);render()};
+$('csv').onclick=()=>{let rows=[['समय','गतिविधि','बदलाव','बैलेंस'],...records.map(r=>[r.time,r.action,r.change,r.balance])];let csv=rows.map(row=>row.map(v=>'"'+String(v).replaceAll('"','""')+'"').join(',')).join('\n');let a=document.createElement('a');a.href=URL.createObjectURL(new Blob(['\ufeff'+csv],{type:'text/csv;charset=utf-8'}));a.download='samrat-bingo-records.csv';a.click();URL.revokeObjectURL(a.href)};render()})();
+</script>
+</body></html>
